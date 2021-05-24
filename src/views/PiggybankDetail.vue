@@ -37,6 +37,7 @@
                   <input
                     type="number"
                     class="form-control"
+                    min="0"
                     v-model="withdraw"
                   />
                 </div>
