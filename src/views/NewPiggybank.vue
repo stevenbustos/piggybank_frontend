@@ -24,7 +24,7 @@
                   <span class="input-group-text">Piggybank Initial Value</span>
                 </div>
                 <input
-                  type="text"
+                  type="number"
                   class="form-control"
                   name="text"
                   v-model="form.balance"
@@ -36,6 +36,10 @@
             </div>
             <button class="btn btn-primary" type="submit">Submit</button>
           </form>
+          <br>
+          <div class="alert alert-danger" role="alert" v-if="showError" id="error">
+            You have to fill all the fields
+          </div>
         </div>
       </div>
     </div>
@@ -73,6 +77,7 @@ export default {
         name: "",
         balance: "",
       },
+      showError: false
     };
   },
   methods: {
@@ -85,9 +90,14 @@ export default {
         })
         .then((response) => {
           this.myPiggybanks = response.data;
+          this.showError = false;
           this.$router.replace({
             name: "Piggybanks",
           });
+        })
+        .catch((e) => {
+          console.log(e)
+          this.showError = true;
         });
     },
     setUserVal(user) {

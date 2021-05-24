@@ -43,6 +43,10 @@
               </div>
               <button class="btn btn-primary" type="submit">Submit</button>
             </form>
+            <br>
+            <div class="alert alert-danger" role="alert" v-if="showError" id="error">
+              You can't withdraw a bigger amount than you current balance
+            </div>
           </div>
         </div>
       </modal>
@@ -98,6 +102,8 @@ export default {
       myPiggybank: "",
       balance: "",
       withdraw: "",
+      showError: false,
+      showWarning: false,
     };
   },
   methods: {
@@ -120,8 +126,8 @@ export default {
       let piggyId = this.$route.params.piggyId;
       let newValue = this.validateValue(this.form);
 
-      if (newValue <= 0) {
-        this.deletePiggy();
+      if (newValue < 0) {
+        this.showError= true
       } else {
         axios
           .patch(API_URL + "piggybanks/" + piggyId, {
