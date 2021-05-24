@@ -31,6 +31,13 @@ export default {
                 }
             )
         },
+        async signup ({ dispatch }, userInfo) {
+            return AuthService.register(userInfo).then(
+                user => {
+                    dispatch('attempt', user.token)
+                }
+            )
+        },
         async attempt ({ commit, state }, token) {
             if (token) {
                 commit('SET_TOKEN', token)

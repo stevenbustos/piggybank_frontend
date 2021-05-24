@@ -1,17 +1,34 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <span v-if="authenticated">
-      <router-link to="/piggybanks">Piggybanks</router-link> |
-      <span> {{ user.first_name }} </span>
-      <span> {{ user.last_name }} </span>
-      <span> {{ user.email }} </span>
-      <button @click.prevent="logout">Logout</button>
-    </span>
-    <span v-else>
-      <router-link to="/register">Register</router-link> |
-      <router-link to="/login">Login</router-link>
-    </span>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+      <router-link class="navbar-brand" to="/">App Home</router-link>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" v-if="authenticated">
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/piggybanks">Piggybanks</router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link class="nav-link" :to="{ name: 'NewPiggybank'}">Create New Piggybank</router-link>
+          </li>
+        </ul>
+        <div v-if="authenticated">
+          <span class="navbar-text">
+            {{ user.first_name }} 
+            {{ user.last_name }} |
+            {{ user.email }} 
+          </span>
+          <button class="btn btn-outline-success my-2 my-sm-0" @click.prevent="logout">Logout</button>
+        </div>
+        <ul class="navbar-nav mr-auto" v-else>
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/register">Register</router-link>
+          </li>
+          <li class="nav-item active">
+            <router-link class="nav-link" to="/login">Login</router-link>
+          </li>
+        </ul>
+      </div>
+    </nav>
   </div>
 </template>
 
@@ -40,19 +57,3 @@ export default {
   },
 };
 </script>
-
-<style>
-#nav {
-  padding: 30px;
-}
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-a:hover {
-  cursor: pointer;
-}
-#nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>

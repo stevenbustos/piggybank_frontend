@@ -1,18 +1,64 @@
 <template>
   <div class="piggybanks">
-    <!-- <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <table class="table" v-if="myPiggybanks.length">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Balance</th>
+        </tr>
+      </thead>
+      <tbody>
+      <tr v-for="piggybank in myPiggybanks" :key="piggybank._id">
+        <td><router-link class="nav-link" :to="{ name: 'PiggybankDetail', params: { piggyId: piggybank._id }}">{{ piggybank.name }}</router-link></td>
+        <td>{{ piggybank.balance }}</td>
+      </tr>
+      </tbody>
+    </table>
+    <div class="container" v-else>
+      <div class="alert alert-primary" role="alert">
+        You don't have Piggybanks, please create one
+      </div>
+      <router-link class="btn btn-primary" :to="{ name: 'NewPiggybank'}">Create New Piggybank</router-link>
+    </div>
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-// import HelloWorld from '@/components/HelloWorld.vue'
+import axios from 'axios';
+import { mapGetters } from "vuex";
+
+const API_URL = 'http://localhost:10000/';
 
 export default {
   name: 'Piggybanks',
-  components: {
-    // HelloWorld
+  computed: {
+    ...mapGetters({
+      user: "auth/user",
+    }),
+  },
+  watch: {
+    'user': {
+      handler (newVal) {
+        if (newVal) { 
+          this.getMyPiggybanks(this.user)
+        }
+      },
+      immediate: true 
+    }
+  },
+  data (){
+    return {
+      myPiggybanks: []
+    }
+  },
+  methods: {
+    getMyPiggybanks: function(user) {
+        axios
+        .get(API_URL + 'users/' + user._id + '/piggybanks')
+        .then(response => {
+          this.myPiggybanks = response.data
+        })
+    }
   }
 }
 </script>
