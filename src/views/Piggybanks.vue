@@ -27,8 +27,6 @@
 import axios from 'axios';
 import { mapGetters } from "vuex";
 
-const API_URL = 'http://localhost:10000/';
-
 export default {
   name: 'Piggybanks',
   computed: {
@@ -54,7 +52,7 @@ export default {
   methods: {
     getMyPiggybanks: function(user) {
         axios
-        .get(API_URL + 'users/' + user._id + '/piggybanks')
+        .get('users/' + user._id + '/piggybanks')
         .then(response => {
           this.myPiggybanks = response.data
         })

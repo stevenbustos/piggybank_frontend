@@ -50,8 +50,6 @@
 import axios from "axios";
 import { mapGetters } from "vuex";
 
-const API_URL = "http://localhost:10000/";
-
 export default {
   name: "NewPiggybank",
   computed: {
@@ -83,7 +81,7 @@ export default {
   methods: {
     submit() {
       axios
-        .post(API_URL + "piggybanks/" + this.user._id + "/create", {
+        .post("piggybanks/" + this.user._id + "/create", {
           name: this.form.name,
           balance: this.form.balance,
           owner: this.user._id,

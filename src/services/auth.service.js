@@ -1,11 +1,9 @@
 import axios from 'axios';
 
-const API_URL = 'http://localhost:10000/auth/';
-
 class AuthService {
     async login(user) {
         return await axios
-        .post(API_URL + 'login', {
+        .post('auth/login', {
             email: user.email,
             password: user.password
         })
@@ -15,7 +13,7 @@ class AuthService {
     }
     async register(user) {
         return await axios
-        .post(API_URL + 'signup', {
+        .post('auth/signup', {
             first_name: user.first_name,
             last_name: user.last_name,
             email: user.email,
@@ -27,7 +25,7 @@ class AuthService {
     }
     async tokenVerify() {
         return await axios
-        .get(API_URL + 'token')
+        .get('auth/token')
         .then(response => {
             return response.data
         })

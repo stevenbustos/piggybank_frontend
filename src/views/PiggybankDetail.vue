@@ -91,8 +91,6 @@
 <script>
 import axios from "axios";
 
-const API_URL = "http://localhost:10000/";
-
 export default {
   name: "PiggybankDetail",
   mounted() {
@@ -110,13 +108,13 @@ export default {
   methods: {
     getPiggyInfo() {
       let piggyId = this.$route.params.piggyId;
-      axios.get(API_URL + "piggybanks/" + piggyId).then((response) => {
+      axios.get("piggybanks/" + piggyId).then((response) => {
         this.myPiggybank = response.data;
       });
     },
     deletePiggy() {
       let piggyId = this.$route.params.piggyId;
-      axios.delete(API_URL + "piggybanks/" + piggyId).then((response) => {
+      axios.delete("piggybanks/" + piggyId).then((response) => {
         console.log(response)
         this.$router.push({
           name: "Piggybanks",
@@ -131,7 +129,7 @@ export default {
         this.showError= true
       } else {
         axios
-          .patch(API_URL + "piggybanks/" + piggyId, {
+          .patch("piggybanks/" + piggyId, {
             balance: newValue,
           })
           .then((response) => {
